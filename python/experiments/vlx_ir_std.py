@@ -1,5 +1,4 @@
 import os
-import numpy as np
 
 from utils.stats import Data, Sample_statistics
 
@@ -39,3 +38,13 @@ with open(EXPERIMENTS_FILENAME, 'r') as file:
 
 print('Done!\n')
 print(data)
+
+
+plt.errorbar(range(len(sensors)), data.mean_points, data.std_points,
+             linestyle='None', marker='o')
+plt.title('STD measurement experiment')
+plt.xlabel('Sensors')
+plt.ylabel('Measurements, mm')
+plt.xticks(range(len(sensors)), sensors)
+plt.grid()
+plt.show()
