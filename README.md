@@ -9,7 +9,7 @@ This solves problems with imports
 python3 -m venv ./venv
 ```
 
-Install libraries from requirements
+Install libraries from `requirements.txt`
 
 ```
 pip install -r requirements.txt
