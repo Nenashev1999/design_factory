@@ -1,32 +1,41 @@
 import os
 import numpy as np
+
+from utils.stats import Data, Sample_statistics
+
 import matplotlib.pyplot as plt
+
 
 EXPERIMENTS_FILENAME = os.path.join(
     'data',
     'experiments',
     os.path.splitext(os.path.basename(__file__))[0] + '.txt'
 )
-SENSOR_LIST = (
-    "VLX",
-    "IR",
-)
-POINTS_PER_EXPERIMENT = 1000
 
-data_points = np.zeros((len(SENSOR_LIST), POINTS_PER_EXPERIMENT), dtype=np.int16)
-mean_points = np.zeros((len(SENSOR_LIST)), dtype=np.float32)
-std_points = np.zeros((len(SENSOR_LIST)), dtype=np.float32)
+
+sensors = []
+data = Data()
+points_set = []
 
 with open(EXPERIMENTS_FILENAME, 'r') as file:
-    for i in range(POINTS_PER_EXPERIMENT):
-        point = file.readline().strip().split()
-        for j in range(1, len(point), 2):
-            data_points[j // 2][i] = float(point[j])
-    for i in range(len(SENSOR_LIST)):
-        mean_points[i], std_points[i] = np.mean(data_points[i]), np.std(data_points[i])
+    first_line = file.readline().strip().split()
+    for sensor in first_line[::2]:
+        sensors.append(sensor)
+    for point in first_line[1::2]:
+        points_set.append(Sample_statistics())
+
+    for line in file:
+        line = line.strip().split()
+
+        if line:
+            for i, point in enumerate(line[1::2]):
+                points_set[i].add(float(point))
+
+    for point_set in points_set:
+        data.mean_points.append(point_set.mean)
+        data.var_points.append(point_set.var)
+        data.std_points.append(point_set.std)
+
 
 print('Done!\n')
-print('EXPERIMENTS_DISTANCES:\n', *SENSOR_LIST)
-print('MEAN_DISTANCES:\n', *mean_points)
-print('STD_OF_DISTANCES:\n', *std_points)
-print()
+print(data)
