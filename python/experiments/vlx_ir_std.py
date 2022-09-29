@@ -6,11 +6,16 @@ import matplotlib.pyplot as plt
 
 
 EXPERIMENTS_FILENAME = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
     'data',
     'experiments',
-    os.path.splitext(os.path.basename(__file__))[0] + '.txt'
+    os.path.splitext(os.path.basename(__file__))[0] + '.txt',
 )
-
+RESULTS_FILENAME = os.path.join(
+    os.path.dirname(__file__),
+    'results',
+    os.path.splitext(os.path.basename(__file__))[0]
+)
 
 sensors = []
 data = Data()
@@ -22,6 +27,7 @@ with open(EXPERIMENTS_FILENAME, 'r') as file:
         sensors.append(sensor)
     for point in first_line[1::2]:
         points_set.append(Sample_statistics())
+        points_set[-1].add(float(point))
 
     for line in file:
         line = line.strip().split()
@@ -47,4 +53,23 @@ plt.xlabel('Sensors')
 plt.ylabel('Measurements, mm')
 plt.xticks(range(len(sensors)), sensors)
 plt.grid()
+plt.savefig(RESULTS_FILENAME, dpi=300)
+plt.show()
+
+
+points = [[0]*1000 for _ in range(2)]
+with open(EXPERIMENTS_FILENAME, 'r') as file:
+    for l, line in enumerate(file):
+        line = line.strip().split()
+        if line:
+            for i, point in enumerate(line[1::2]):
+                points[i][l] = float(point)
+
+plt.boxplot(points)
+plt.title('BoxPlot measurement experiment')
+plt.xlabel('Sensors')
+plt.ylabel('Measurements, mm')
+plt.xticks(range(1, 1 + len(sensors)), sensors)
+plt.grid()
+plt.savefig(RESULTS_FILENAME + '_boxplot', dpi=300)
 plt.show()
