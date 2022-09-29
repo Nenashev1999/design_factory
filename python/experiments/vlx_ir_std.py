@@ -17,6 +17,7 @@ RESULTS_FILENAME = os.path.join(
     os.path.splitext(os.path.basename(__file__))[0]
 )
 
+
 sensors = []
 data = Data()
 points_set = []
@@ -48,7 +49,12 @@ print(data)
 
 plt.errorbar(range(len(sensors)), data.mean_points, data.std_points,
              linestyle='None', marker='o')
-plt.title('STD measurement experiment')
+plt.title(
+    'STD measurement experiment\n' +
+    '\n'.join([
+        f'{sensor} | Mean: {data.mean_points[i]:.3f}; STD: {data.std_points[i]:.3f}' for i, sensor in enumerate(sensors)
+    ])
+)
 plt.xlabel('Sensors')
 plt.ylabel('Measurements, mm')
 plt.xticks(range(len(sensors)), sensors)
@@ -66,7 +72,12 @@ with open(EXPERIMENTS_FILENAME, 'r') as file:
                 points[i][l] = float(point)
 
 plt.boxplot(points)
-plt.title('BoxPlot measurement experiment')
+plt.title(
+    'BoxPlot measurement experiment\n' + 
+    '\n'.join([
+        f'{sensor} | Mean: {data.mean_points[i]:.3f}; STD: {data.std_points[i]:.3f}' for i, sensor in enumerate(sensors)
+    ])
+)
 plt.xlabel('Sensors')
 plt.ylabel('Measurements, mm')
 plt.xticks(range(1, 1 + len(sensors)), sensors)

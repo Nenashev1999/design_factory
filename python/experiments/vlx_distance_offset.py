@@ -11,6 +11,11 @@ EXPERIMENTS_FILENAME = os.path.join(
     'experiments',
     os.path.splitext(os.path.basename(__file__))[0] + '.txt'
 )
+RESULTS_FILENAME = os.path.join(
+    os.path.dirname(__file__),
+    'results',
+    os.path.splitext(os.path.basename(__file__))[0]
+)
 
 
 distances = []
@@ -60,8 +65,12 @@ print('MODEL_COEFFICIENTS:\n', *model.coef_, model.intercept_)
 
 plt.errorbar(distances, data.mean_points, data.std_points,
              linestyle='None', marker='o')
-plt.title('Distance measurement experiment')
+plt.title(
+    'Distance measurement experiment\n' +
+    f'Model: Distance = {model.coef_[0]:.3f} * Measurement + {model.intercept_:.3f}'
+)
 plt.xlabel('Real distance, mm')
 plt.ylabel('Measurement, mm')
 plt.grid()
+plt.savefig(RESULTS_FILENAME, dpi=300)
 plt.show()
