@@ -30,8 +30,6 @@ def calculate_volume(
             r2_d = points_scans[plane_num + 1][sensor_num + 1]
 
             volume += (
-                1/36 *
-                alpha *
                 l[plane_num] * (
                     2 * r1_o * r1_o +
                     2 * r1_d * r1_d +
@@ -48,5 +46,6 @@ def calculate_volume(
 
             sensor_num += 1
         plane_num += 1
-
+    
+    volume *= alpha / 36
     return volume
