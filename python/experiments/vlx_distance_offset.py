@@ -63,12 +63,21 @@ model.fit([[point] for point in data.mean_points], distances)
 print('MODEL_COEFFICIENTS:\n', *model.coef_, model.intercept_)
 
 
+plt.errorbar(distances, distances,
+             linestyle='-')
+plt.errorbar(distances, [(dist - model.intercept_) / model.coef_[0] for dist in distances],
+             linestyle='-')
 plt.errorbar(distances, data.mean_points, data.std_points,
              linestyle='None', marker='o')
 plt.title(
     'Distance measurement experiment\n' +
     f'Model: Distance = {model.coef_[0]:.3f} * Measurement + {model.intercept_:.3f}'
 )
+plt.legend([
+    'Ideal measurements',
+    'Model',
+    'Measurements',
+])
 plt.xlabel('Real distance, mm')
 plt.ylabel('Measurement, mm')
 plt.grid()

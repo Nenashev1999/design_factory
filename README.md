@@ -3,6 +3,7 @@ Skoltech Project
 
 ## Python
 Create virtual environment in project folder
+
 This solves problems with imports
 
 ```
