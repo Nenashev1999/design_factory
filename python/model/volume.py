@@ -6,7 +6,7 @@ def calculate_volume(
     points_scans: list,
     l: tp.Union[float, list],
     alpha: float = 30,
-    is_radians: bool = False 
+    is_radians: bool = False
 ) -> float:
     """
     points: array [plane, scans]
@@ -46,6 +46,6 @@ def calculate_volume(
 
             sensor_num += 1
         plane_num += 1
-    
+
     volume *= alpha / 36
     return volume
