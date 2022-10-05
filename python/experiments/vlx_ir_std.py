@@ -73,7 +73,7 @@ with open(EXPERIMENTS_FILENAME, 'r') as file:
 
 plt.boxplot(points)
 plt.title(
-    'BoxPlot measurement experiment\n' + 
+    'BoxPlot measurement experiment\n' +
     '\n'.join([
         f'{sensor} | Mean: {data.mean_points[i]:.3f}; STD: {data.std_points[i]:.3f}' for i, sensor in enumerate(sensors)
     ])
