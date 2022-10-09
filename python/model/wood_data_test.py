@@ -38,5 +38,3 @@ for filename in FILENAMES:
     volume = calculate_volume(points_scans, l, alpha, is_radians=False)
 
     print(filename, volume)
-
-print(4.831777617711351 / 4.630910095986601)
