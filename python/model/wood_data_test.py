@@ -4,12 +4,13 @@ from volume import calculate_volume
 
 DATA_FOLDER = os.path.join(
     'data',
-    'wood'
+    'wood',
 )
 
 FILENAMES = (
     'data.txt',
     'groundtruth.txt',
+    'generated.txt',
 )
 
 sensors = 12
