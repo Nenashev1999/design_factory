@@ -4,12 +4,13 @@ from volume import calculate_volume
 
 DATA_FOLDER = os.path.join(
     'data',
-    'wood'
+    'wood',
 )
 
 FILENAMES = (
     'data.txt',
     'groundtruth.txt',
+    'generated.txt',
 )
 
 sensors = 12
@@ -38,5 +39,3 @@ for filename in FILENAMES:
     volume = calculate_volume(points_scans, l, alpha, is_radians=False)
 
     print(filename, volume)
-
-print(4.831777617711351 / 4.630910095986601)
